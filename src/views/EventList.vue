@@ -12,6 +12,7 @@ import EventService from '@/services/EventService';
 
 export default {
   name: 'EventList',
+  props: ['page'], // <---- receive the param as a prop, the current page
   components: {
     EventCard,
   },
@@ -21,8 +22,10 @@ export default {
     };
   },
   created() {
-    EventService.getEvents()
+    EventService.getEvents(2, this.page) // <---- 2 events per page, and current page
       .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(response.data);
         this.events = response.data;
       })
       .catch((error) => {
